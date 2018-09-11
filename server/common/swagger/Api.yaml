@@ -1,0 +1,514 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: chronophobia
+  description: A simple time efficiency tracking tool!
+basePath: /api
+tags:
+  - name: User
+    description: User model routes.
+  - name: Specification
+    description: The swagger API specification
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+definitions:
+  Category:
+    type: object
+    title: Category
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: goofing-off
+  Activity:
+    type: object
+    title: Instance
+    required:
+      - startedAt
+    properties:
+      startedAt:
+        type: string
+        example: 2018-08-24T05:00:00
+      endedAt:
+          type: string
+          example: 2018-08-24T09:43:34
+      category:
+        type: string
+        example: 5b78f14cfa5efb176b3a6ba5
+  Day:
+    type: object
+    title: Day
+    required:
+      - id
+      - activities
+    properties:
+      id:
+        type: string
+        example: 5b78f14cfa5efb176b3a6ba5
+        description: The valid id of the day that is being edited.
+      activities:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          title: Activity
+          properties:
+            id:
+              type: string
+              description: If not provided, a new activity will be created on the day.
+            startedAt:
+              type: string
+            endedAt:
+                type: string
+            category:
+              type: string
+            action:
+              type: string
+              description: If action REMOVE is provided, associated activity with id will be removed from day.
+        example:
+          - id: 5b78f14cfa5efb176b3a6ba5
+            startedAt: 2018-08-24T05:00:00
+            endedAt: 2018-08-24T09:43:34
+            category: 5b78f14cfa5efb176b3a6ba5
+          - startedAt: 2018-08-24T05:00:00
+            endedAt: 2018-08-24T09:43:34
+            category: 5b78f14cfa5efb176b3a6ba5
+          - id: 5b78f14cfa5efb176b3a6ba5
+            action: REMOVE
+  User:
+    type: object
+    title: User
+    required:
+      - username
+      - password
+      - email
+    properties:
+      username:
+        type: string
+        example: yoloman1
+        description: Only alphanumeric characters and underscore allowed.
+      password:
+        type: string
+        example: some protected string
+      email:
+        type: string
+        example: yoloman1@swag.com
+        description: Only valid email address formats will be accepted.
+paths:
+  /users:
+    delete:
+      tags:
+        - User
+      operationId: delete
+      summary: Delete a user
+      description: Deletes the logged in user.
+      parameters:
+        - in: body
+          name: body
+          description: The id of the user to be deleted.
+          required: true
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+                example: 5b78f14cfa5efb176b3a6ba5
+      responses:
+        200:
+          description: User deleted.
+        401:
+          description: Unauthorized. User needs to be logged-in.
+        500:
+          description: Internal error. Unable to be specified.
+  #   get:
+  #     operationId: get
+  #     summary: Get the logged in user
+  #     tags:
+  #       - User
+  #     description: Send the user model of the user associated with the
+  #       authorization token sent in the request headers.
+  #     responses:
+  #       200:
+  #         description: Returns the model of the currently logged-in user. Same as /me.
+  #       401:
+  #         description: Unathorized. Needs new log in and valid token.
+  #       500:
+  #         description: Internal error. Unable to be specified.
+    post:
+      operationId: post
+      summary: Post a user
+      parameters:
+        - in: body
+          name: body
+          required: true
+          description:
+            The user to be created.
+          schema:
+            type: object
+            title: User
+            required:
+              - username
+              - password
+              - email
+              - currentDayStart
+            properties:
+              username:
+                type: string
+                example: yoloman1
+                description: Only alphanumeric characters and underscore allowed.
+              password:
+                type: string
+                example: some protected string
+              email:
+                type: string
+                example: yoloman1@swag.com
+                description: Only valid email address formats will be accepted.
+              currentDayStart:
+                type: string
+                example: 2018-08-24T05:00:00
+                description: Only valid date-times will be accepted.
+      tags:
+        - User
+      description: Creates a user.
+      responses:
+        201:
+          description: Returns the model of the created user.
+        409:
+          description: User already exists. Username or email is not unique.
+        500:
+          description: Internal error. Unable to be specified.
+    patch:
+      operationId: patch
+      summary: Update a user
+      parameters:
+        - in: body
+          name: body
+          required: true
+          description:
+            The user to be updated.
+          schema:
+            type: object
+            title: User
+            properties:
+              username:
+                type: string
+                example: yolomanupdated1
+                description: Only alphanumeric characters and underscore allowed.
+              password:
+                type: string
+                example: some other protected string
+              email:
+                type: string
+                example: yolomanupdated1@swag.com
+                description: Only valid email address formats will be accepted.
+              currentDay:
+                type: string
+                example: 5b78f14cfa5efb176b3a6ba5
+      tags:
+        - User
+      description: Updates a user.
+      responses:
+        200:
+          description: Returns the model of the updated user.
+        422:
+          description: Invalid data input.
+        500:
+          description: Internal error. Unable to be specified.
+  /me:
+    get:
+      operationId: me
+      summary: Get the logged in user
+      tags:
+        - User
+      description: Send the user model of the user associated with the
+        authorization token sent in the request headers.
+      responses:
+        200:
+          description: Returns the model of the signed in user.
+        401:
+          description: Unathorized. Needs new log in and valid token.
+        500:
+          description: Internal error. Unable to be specified.
+  /login:
+    post:
+      operationId: login
+      summary: Login a user
+      parameters:
+        - in: body
+          name: body
+          required: true
+          description: The user to be created.
+          schema:
+            type: object
+            title: Login
+            required:
+              - emailOrUsername
+              - password
+            properties:
+              emailOrUsername:
+                type: string
+                example: yoloman1
+              password:
+                type: string
+                example: some protected string
+      tags:
+        - User
+      description: Send the user token after successfully matching usernames,
+        emails, or passwords.
+      responses:
+        200:
+          description: Returns the authorization token to be used.
+        400:
+          description: Specific error occured that prevented login.
+        401:
+          description: Unathorized, invalid credentials. Could not be logged in.
+        404:
+          description: No user exists with provided username or email.
+        422:
+          description: Logged in, user needs to log out before they can log back in.
+        500:
+          description: Internal error. Unable to be specified.
+
+  /categories:
+    delete:
+      tags:
+        - Category
+      operationId: delete
+      summary: Delete a category
+      description: Deletes a category for the user.
+      parameters:
+        - in: body
+          name: body
+          description: The id of the category to be deleted.
+          required: true
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+                example: 5b78f14cfa5efb176b3a6ba5
+      responses:
+        200:
+          description: Category deleted.
+        401:
+          description: Unauthorized. User needs to be logged-in.
+        500:
+          description: Internal error. Unable to be specified.
+    get:
+      tags:
+        - Category
+      operationId: get
+      summary: Get categories
+      description: Returns up to the max of 10 categories per the logged in user
+      responses:
+        200:
+          description: Returns all categories of the user.
+        401:
+          description: Unathorized. Needs new log in and valid token.
+        500:
+          description: Internal error. Unable to be specified.
+    post:
+      tags:
+        - Category
+      operationId: post
+      summary: Create a category
+      description: Posts a category for the user.
+      parameters:
+        - in: body
+          name: body
+          required: true
+          description: The category to be created.
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        200:
+          description: Category created.
+        401:
+          description: Unathorized. Needs new log in and valid token.
+        500:
+          description: Internal error. Unable to be specified.
+
+  /activities:
+    post:
+      tags:
+        - Activity
+      operationId: post
+      summary: Create an activity
+      description: Posts an activity for the day for the user.
+      parameters:
+        - in: body
+          name: body
+          required: true
+          description: The activity to be created.
+          schema:
+            type: object
+            title: Instance
+            required:
+              - startedAt
+            properties:
+              startedAt:
+                type: string
+                example: 2018-08-24T15:31:23
+              category:
+                type: string
+                example: 5b78f14cfa5efb176b3a6ba5
+              currentMidnight:
+                type: string
+                example: 2018-08-24T05:00:00
+      responses:
+        200:
+          description: Activity created.
+        401:
+          description: Unathorized. Needs new log in and valid token.
+        500:
+          description: Internal error. Unable to be specified.
+  /days:
+    get:
+      tags:
+        - Day
+      operationId: get
+      summary: Get the user's days
+      description: Returns all of the days a user has. (days expire after 30 days)
+      responses:
+        200:
+          description: Returns all days of a user.
+        401:
+          description: Unathorized. Needs new log in and valid token.
+        500:
+          description: Internal error. Unable to be specified.
+
+    post:
+      tags:
+        - Day
+      operationId: post
+      summary: Create a day
+      description: Creates a day.
+      parameters:
+        - in: body
+          name: body
+          description: The day to be created.
+          required: true
+          schema:
+            type: object
+            required:
+              - startedAt
+            properties:
+              startedAt:
+                type: string
+                example: 2018-08-24T05:00:00
+      responses:
+        201:
+          description: Returns the model of the created day.
+        422:
+          description: Invalid data input.
+        500:
+          description: Internal error. Unable to be specified.
+
+    patch:
+      tags:
+        - Day
+      operationId: patch
+      summary: Update a day
+      description: Updates a day.
+      parameters:
+        - in: body
+          name: body
+          description: The model of the day and the changes desired.
+          required: true
+          schema:
+            $ref: '#/definitions/Day'
+      responses:
+        200:
+          description: Returns the model of the updated day.
+        422:
+          description: Invalid data input.
+        500:
+          description: Internal error. Unable to be specified.
+
+    delete:
+      tags:
+        - Day
+      operationId: delete
+      summary: Delete a day
+      description: Deletes a day.
+      parameters:
+        - in: body
+          name: body
+          description: The id of the day to be deleted.
+          required: true
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+                example: 5b78f14cfa5efb176b3a6ba5
+      responses:
+        200:
+          description: Day deleted.
+        401:
+          description: Unauthorized. User needs to be logged-in.
+        500:
+          description: Internal error. Unable to be specified.
+
+  /identities/emails:
+    get:
+      parameters:
+        - in: query
+          name: email
+          required: true
+          type: string
+          description: The email that we are checking to see if it is unique.
+      operationId: checkEmail
+      summary: See whether email is unique
+      tags:
+        - Identities
+      responses:
+        200:
+          description: Returns uninque key which will be true or false.
+        422:
+          description: No valid email provided in query.
+        500:
+          description: Internal error. Unable to be specified.
+  /identities/usernames:
+    get:
+      parameters:
+        - in: query
+          name: username
+          required: true
+          type: string
+          description: The username that we are checking to see if it is unique.
+            Only alphanumeric characters and underscore (_) allowed.
+      operationId: checkUsername
+      summary: See whether username is unique
+      tags:
+        - Identities
+      responses:
+        200:
+          description: Returns uninque key which will be true or false.
+        422:
+          description: No valid username provided in query.
+        500:
+          description: Internal error. Unable to be specified.
+
+  /spec:
+    get:
+      operationId: get
+      summary: Get the API spec in JSON
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification.
+        500:
+          description: Internal error. Unable to be specified.
