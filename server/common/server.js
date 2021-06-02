@@ -38,7 +38,7 @@ export default class ExpressServer {
   }
 
   listen(port = process.env.PORT || 3000) {
-    mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds119442.mlab.com:19442/chronophobia`);
+    mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.7xrgs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
     const welcome = p => () => l.info(`up and running in ${process.env.NODE_ENV || 'development'} @: ${os.hostname()} on port: ${p}}`);
     http.createServer(app).listen(port, welcome(port));
     return app;
