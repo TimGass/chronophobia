@@ -1,20 +1,12 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
-  webpack: (config, options) => {
+  webpack: (config, options, webpack) => {
+    console.log(config);
     config.entry.main = ['./server/index.js'];
-
-    config.plugins.push(
-      new CopyWebpackPlugin(
-        [
-          {
-            from: 'server/common/swagger/Api.yaml',
-            to: 'server/common/swagger/Api.yaml',
-          },
-        ],
-        options
-      )
-    );
-
+    options.exports = {
+      output: {
+        hashFunction: "sha256"
+      }
+    }
     return config;
   },
 };

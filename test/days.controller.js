@@ -1,6 +1,6 @@
 import chai from 'chai';
 import request from 'supertest';
-import uuid from 'uuid/v4';
+import uuid from 'uuid';
 import moment from 'moment';
 import chai_things from 'chai-things';
 import Server from '../server';
