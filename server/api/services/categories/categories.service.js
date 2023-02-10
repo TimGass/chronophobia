@@ -1,5 +1,5 @@
-import l from '../../../common/logger';
-import { Category, User } from '../../../common/models/User';
+import l from '../../../common/logger.js';
+import { Category, User } from '../../../common/models/User.js';
 
 class CategoriesService {
   async create(user, body) {

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import moment from 'moment';
-import ActivitySchema from './Activity';
+import ActivitySchema from './Activity.js';
 
 const DaySchema = new mongoose.Schema({
   startedAt: {
@@ -21,6 +21,8 @@ const DaySchema = new mongoose.Schema({
 
 DaySchema.index({ startedAt: 1, user: 1 }, { unique: true });
 
-module.exports.DaySchema = DaySchema;
-module.exports.Day = mongoose.model('Day', DaySchema);
-module.exports.Activity = mongoose.model('Activity', ActivitySchema);
+
+const Day = mongoose.model('Day', DaySchema);
+const Activity = mongoose.model('Activity', ActivitySchema);
+
+export { DaySchema, Day, Activity };

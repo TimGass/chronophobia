@@ -1,7 +1,7 @@
 import moment from 'moment';
-import l from '../../../common/logger';
-import { Day, Activity } from '../../../common/models/Day';
-import Token from '../../../common/models/AccessToken';
+import l from '../../../common/logger.js';
+import { Day, Activity } from '../../../common/models/Day.js';
+import Token from '../../../common/models/AccessToken.js';
 
 class CategoriesService {
   async get(req) {

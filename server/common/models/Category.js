@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { User } from './User';
+import { User } from './User.js';
 
 const CategorySchema = new mongoose.Schema({
   name: {
@@ -65,4 +65,4 @@ CategorySchema.pre('save', async function (next) {
   return next();
 });
 
-module.exports = CategorySchema;
+export default CategorySchema;

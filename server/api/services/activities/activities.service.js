@@ -1,6 +1,6 @@
 import moment from 'moment';
-import l from '../../../common/logger';
-import { Activity, Day } from '../../../common/models/Day';
+import l from '../../../common/logger.js';
+import { Activity, Day } from '../../../common/models/Day.js';
 
 class ActivitiesService {
   async create(user, body) {

@@ -1,10 +1,10 @@
 import moment from 'moment';
-import UsersService from '../../services/users/users.service';
-import MeService from '../../services/me.service';
-import Token from '../../../common/models/AccessToken';
-import { User, Category } from '../../../common/models/User';
-import { Day } from '../../../common/models/Day';
-import l from '../../../common/logger';
+import UsersService from '../../services/users/users.service.js';
+import MeService from '../../services/me.service.js';
+import Token from '../../../common/models/AccessToken.js';
+import { User, Category } from '../../../common/models/User.js';
+import { Day } from '../../../common/models/Day.js';
+import l from '../../../common/logger.js';
 
 export class Controller {
   async get(req, res) {

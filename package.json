@@ -2,8 +2,10 @@
   "name": "chronophobia",
   "version": "1.0.0",
   "description": "A simple time efficiency tracking tool!",
-  "main": "index.js",
+  "main": "./server/index.js",
+  "type": "module",
   "scripts": {
+    "start": "node ./server/index.js",
     "dev": "backpack dev | pino-pretty -o 'short'",
     "debug": "backpack dev --inspect-brk | pino-pretty -o 'short'",
     "test": "_mocha --exit"
@@ -40,5 +42,5 @@
     "swagger-editor-dist": "^4.6.1",
     "swagger-ui-dist": "^4.15.5"
   },
-  "author": "Carmine DiMascio <cdimascio@gmail.com> (https://github.com/cdimascio)"
+  "author": "Tim Gass"
 }

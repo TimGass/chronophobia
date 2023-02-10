@@ -1,6 +1,6 @@
 import Express from 'express';
 import * as path from 'path';
-import * as bodyParser from 'body-parser';
+import bodyParser from 'body-parser';
 import * as http from 'http';
 import * as os from 'os';
 import cookieParser from 'cookie-parser';
@@ -8,13 +8,16 @@ import mongoose from 'mongoose';
 import RedisStore from 'rate-limit-redis';
 import Redis from 'redis';
 import rateLimit from 'express-rate-limit';
-import swaggerify from './swagger';
-import l from './logger';
+import swaggerify from './swagger/index.js';
+import l from './logger.js';
+import { fileURLToPath } from 'url';
 
 const app = new Express();
 
 export default class ExpressServer {
   constructor() {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
     const root = path.normalize(`${__dirname}/../..`);
     app.set('appPath', `${root}client`);
     app.use(bodyParser.json());
@@ -38,6 +41,7 @@ export default class ExpressServer {
   }
 
   listen(port = process.env.PORT || 3000) {
+    mongoose.set("strictQuery", false);
     mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.7xrgs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
     const welcome = p => () => l.info(`up and running in ${process.env.NODE_ENV || 'development'} @: ${os.hostname()} on port: ${p}}`);
     http.createServer(app).listen(port, welcome(port));

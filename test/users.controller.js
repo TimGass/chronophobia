@@ -1,7 +1,7 @@
 import chai from 'chai';
 import request from 'supertest';
-import Server from '../server';
-import uuid from 'uuid';
+import Server from '../server.js';
+import {v4 as uuid } from 'uuid';
 import moment from 'moment';
 
 const expect = chai.expect;

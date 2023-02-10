@@ -1,7 +1,12 @@
 import middleware from 'swagger-express-middleware';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 
 export default function (app, routes) {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const root = path.normalize(`${__dirname}/../..`);
+
   middleware(path.join(__dirname, 'Api.yaml'), app, (err, mw) => {
     // Enable Express' case-sensitive and strict options
     // (so "/entities", "/Entities", and "/Entities/" are all different)

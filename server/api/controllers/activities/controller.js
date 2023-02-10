@@ -1,7 +1,7 @@
 import moment from 'moment';
-import ActivitiesService from '../../services/activities/activities.service';
-import MeService from '../../services/me.service';
-import l from '../../../common/logger';
+import ActivitiesService from '../../services/activities/activities.service.js';
+import MeService from '../../services/me.service.js';
+import l from '../../../common/logger.js';
 
 export class Controller {
   async create(req, res) {

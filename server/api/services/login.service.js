@@ -1,7 +1,7 @@
-import uuid from 'uuid/v4';
-import l from '../../common/logger';
-import { User } from '../../common/models/User';
-import Token from '../../common/models/AccessToken';
+import { v4 as uuid } from 'uuid';
+import l from '../../common/logger.js';
+import { User } from '../../common/models/User.js';
+import Token from '../../common/models/AccessToken.js';
 
 class LoginService {
   async login(req, res) {

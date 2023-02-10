@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import moment from 'moment';
-import CategorySchema from './Category';
-import { Day } from './Day';
+import CategorySchema from './Category.js';
+import { Day } from './Day.js';
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -88,5 +87,7 @@ UserSchema.pre('save', async function (next) {
   return next();
 });
 
-module.exports.User = mongoose.model('User', UserSchema);
-module.exports.Category = mongoose.model('Category', CategorySchema);
+const User = mongoose.model('User', UserSchema);
+const Category = mongoose.model('Category', CategorySchema);
+
+export { User, Category };

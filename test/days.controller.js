@@ -1,9 +1,9 @@
 import chai from 'chai';
 import request from 'supertest';
-import uuid from 'uuid';
+import {v4 as uuid } from 'uuid';
 import moment from 'moment';
 import chai_things from 'chai-things';
-import Server from '../server';
+import Server from '../server.js';
 
 chai.should();
 chai.use(chai_things);

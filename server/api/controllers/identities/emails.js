@@ -1,5 +1,5 @@
-import EmailService from '../../services/identities/emails.service';
-import l from '../../../common/logger';
+import EmailService from '../../services/identities/emails.service.js';
+import l from '../../../common/logger.js';
 
 export class Controller {
   async get(req, res) {

@@ -1,5 +1,5 @@
-import UsernamesService from '../../services/identities/usernames.service';
-import l from '../../../common/logger';
+import UsernamesService from '../../services/identities/usernames.service.js';
+import l from '../../../common/logger.js';
 
 export class Controller {
   async get(req, res) {
