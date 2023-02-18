@@ -31,23 +31,22 @@ header.site-header nav li {
 }
 header.site-header nav .navbar-brand {
     font-weight: bold;
-    margin: 0;
     display: inline-block;
     float: left;
     font-size: 24px;
-    margin-right: 20px;
     color: #000;
-    padding: 0 15px 0 15px;
+    padding: 0;
     margin: 0;
-    width: 120px;
-}
+    width: 50px;
+  }
 header.site-header nav .navbar-brand a {
     background: url("../images/chronophobiaLarge.png") center left no-repeat;
-    width: 130px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
     display: block;
-    margin-top: -5px;
-    background-size: 48%;
+    margin-top: 6px;
+    background-size: cover;
+    object-fit: cover;
 }
 header.site-header nav .navbar-brand img {
     position: relative;
