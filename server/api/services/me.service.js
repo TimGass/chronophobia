@@ -23,7 +23,7 @@ class MeService {
       if (user && !(user instanceof Error)) {
         user = await user
           .populate('currentDay')
-          .execPopulate().catch(error => error);
+          .catch(error => error);
         return user;
       }
       let error = new Error();

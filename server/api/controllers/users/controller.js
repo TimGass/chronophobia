@@ -192,7 +192,7 @@ export class Controller {
             .status(500)
             .json({ error: 'An internal server error occured!', code: 'INTERNAL' });
         }
-        secondResult = await secondResult.populate('currentDay').execPopulate().catch(error => error);
+        secondResult = await secondResult.populate('currentDay').catch(error => error);
         if(secondResult instanceof Error) {
           return secondResult;
         }

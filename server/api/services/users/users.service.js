@@ -16,7 +16,7 @@ class UsersService {
         return err;
       });
     if (result instanceof Error) return result;
-    result = await result.populate('currentDay').execPopulate().catch(err => err);
+    result = await result.populate('currentDay').catch(err => err);
     if (result instanceof Error) return result;
     let clone = result.toObject();
     delete clone.password;
