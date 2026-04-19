@@ -2,3 +2,4 @@ node_modules
 /build
 .vscodes
 .env
+package-lock.json

@@ -1,0 +1,19 @@
+
+app = "chronophobia-api"
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[experimental]
+  auto_rollback = true
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  force_https = true
+  internal_port = 3000
+
+[http_service.concurrency]
+  hard_limit = 25
+  soft_limit = 20
+  type = "connections"
