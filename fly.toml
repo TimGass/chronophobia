@@ -1,19 +1,23 @@
+# fly.toml app configuration file generated for chronophobia-api on 2026-04-19T17:18:08Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "chronophobia-api"
-kill_signal = "SIGINT"
-kill_timeout = 5
-
-[experimental]
-  auto_rollback = true
+app = 'chronophobia-api'
+primary_region = 'iad'
 
 [build]
-  dockerfile = "Dockerfile"
 
 [http_service]
-  force_https = true
   internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
-[http_service.concurrency]
-  hard_limit = 25
-  soft_limit = 20
-  type = "connections"
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024
